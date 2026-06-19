@@ -1,13 +1,10 @@
 package gabriel.prog.mediavault.controller;
 
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import gabriel.prog.mediavault.media.*;
 import gabriel.prog.mediavault.service.MediaService;
 
