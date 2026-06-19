@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="gabriel.prog.mediavault.controller.MainController"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <ToolBar>
+        <Button text="Neu" onAction="#handleAddMedia"/>
+        <Button text="Bearbeiten" onAction="#handleEditMedia"/>
+        <Button text="Löschen" onAction="#handleDeleteMedia"/>
+        <Separator orientation="VERTICAL"/>
+        <Button text="Aktualisieren" onAction="#handleRefresh"/>
+        <ComboBox fx:id="categoryFilter" promptText="Kategorie" onAction="#handleFilterChange"/>
+        <ComboBox fx:id="ratingFilter" promptText="Bewertung" onAction="#handleFilterChange"/>
+        <ComboBox fx:id="statusFilter" promptText="Status" onAction="#handleFilterChange"/>
+        <Separator orientation="VERTICAL"/>
+        <TextField fx:id="searchField" promptText="Suchen..." onKeyReleased="#handleSearch"/>
+        <Button text="x" onAction="#handleClearSearch" style="-fx-font-size: 10px;"/>
+    </ToolBar>
+
+
+    <TableView fx:id="mediaTable" >
+        <columns>
+            <TableColumn text="Titel" prefWidth="250">
+                <cellValueFactory><PropertyValueFactory property="title"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Kategorie" prefWidth="120">
+                <cellValueFactory><PropertyValueFactory property="category"/></cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Bewertung" prefWidth="80" style="-fx-alignment: CENTER;">
+                <cellValueFactory><PropertyValueFactory property="rating"/></cellValueFactory>
+                <cellFactory>
+                    <javafx.scene.control.cell.TextFieldTableCell fx:factory="forTableColumn"/>
+                </cellFactory>
+            </TableColumn>
+            <TableColumn text="Status" prefWidth="120" style="-fx-alignment: CENTER;">
+                <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
+                <cellFactory>
+                    <javafx.scene.control.cell.TextFieldTableCell fx:factory="forTableColumn"/>
+                </cellFactory>
+            </TableColumn>
+            <TableColumn text="Beschreibung" prefWidth="400">
+                <cellValueFactory><PropertyValueFactory property="description"/></cellValueFactory>
+            </TableColumn>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+
+    <HBox styleClass="status-bar">
+        <Label fx:id="statusLabel" text="0 Medien gefunden"/>
+    </HBox>
+
+</VBox>
