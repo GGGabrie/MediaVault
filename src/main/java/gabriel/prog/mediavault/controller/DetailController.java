@@ -10,7 +10,9 @@ import gabriel.prog.mediavault.media.Media;
 
 import java.io.IOException;
 
-
+/**
+ * Controller for showing media details in a separate window
+ */
 public class DetailController {
     @FXML Label titleLabel;
     @FXML Label categoryLabel;
@@ -18,6 +20,10 @@ public class DetailController {
     @FXML Label statusLabel;
     @FXML TextArea descriptionArea;
 
+    /**
+     * Shows a detail dialog for the given media
+     * @param media The media object to be viewed in detail
+     */
     public static void showDialog(Media media){
         try{
             FXMLLoader loader = new FXMLLoader(
@@ -37,6 +43,9 @@ public class DetailController {
         }
     }
 
+    /**
+     * Populates the view with media data
+     */
     private void setMediaData(Media media){
         titleLabel.setText(media.getTitle());
         categoryLabel.setText(media.getCategory());

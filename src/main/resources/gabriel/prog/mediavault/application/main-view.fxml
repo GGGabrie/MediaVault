@@ -53,7 +53,9 @@
     <HBox styleClass="status-bar">
         <Label fx:id="statusLabel" text="0 Medien gefunden" />
         <Region HBox.hgrow="ALWAYS" />
-      <Button text="Details" onAction="#handleShowDetails" alignment="BOTTOM_RIGHT"/>
+        <Button text="Details" onAction="#handleShowDetails" alignment="BOTTOM_RIGHT"/>
+        <Separator orientation="VERTICAL" />
+        <Button text="Status umschalten" onAction="#handleToggleStatus"/>
     </HBox>
 
 </VBox>

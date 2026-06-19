@@ -1,5 +1,9 @@
 package gabriel.prog.mediavault.media;
 
+
+/**
+ * Represents a media entity in the collection
+ */
 public class Media {
     int id;
     String title;
@@ -9,6 +13,14 @@ public class Media {
     MediaStatus status;
 
 
+    /**
+     * Constructor for new Media without ID
+     * @param title
+     * @param category
+     * @param description
+     * @param rating
+     * @param status
+     */
     public Media(String title, String category, String description, int rating, MediaStatus status){
         this.title = title;
         this.category = category;
@@ -17,6 +29,15 @@ public class Media {
         this.status = status;
     }
 
+    /**
+     * Constructor for existing media in database
+     * @param id
+     * @param title
+     * @param category
+     * @param description
+     * @param rating
+     * @param status
+     */
     public Media(int id, String title, String category, String description, int rating, MediaStatus status){
         this.id = id;
         this.title = title;
@@ -26,6 +47,8 @@ public class Media {
         this.status = status;
     }
 
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -43,7 +66,6 @@ public class Media {
     public String getCategory() {
         return category;
     }
-
     public void setCategory(String category) {
         this.category = category;
     }
@@ -51,7 +73,6 @@ public class Media {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -59,7 +80,6 @@ public class Media {
     public int getRating() {
         return rating;
     }
-
     public void setRating(int rating) {
         this.rating = rating;
     }
@@ -67,7 +87,6 @@ public class Media {
     public MediaStatus getStatus() {
         return status;
     }
-
     public void setStatus(MediaStatus status) {
         this.status = status;
     }

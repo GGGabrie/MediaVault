@@ -9,6 +9,10 @@ import gabriel.prog.mediavault.service.MediaService;
 import java.io.IOException;
 import java.util.List;
 
+
+/**
+ * Controller for adding or editing a media entry
+ */
 public class AddEditController {
 
     @FXML TextField titleField;
@@ -21,6 +25,11 @@ public class AddEditController {
     MediaService mediaService;
 
 
+    /**
+     * Shows a dialog for adding or editing media
+     * @param media The media to edit (null for new media)
+     * @param mediaService The service to use
+     */
     public static void showDialog(Media media, MediaService mediaService){
         try{
             FXMLLoader loader = new FXMLLoader(
@@ -59,6 +68,9 @@ public class AddEditController {
         }
     }
 
+    /**
+     * Initializes relevant FXML data
+     */
     @FXML
     public void initialize() {
         ratingCombo.getItems().addAll("1", "2", "3", "4", "5");
@@ -69,6 +81,9 @@ public class AddEditController {
         categoryCombo.setEditable(true);
     }
 
+    /**
+     * Loads all current categories
+     */
     private void loadCategories() {
         if (mediaService != null){
             List<String> categories = mediaService.getAllCategories();
@@ -82,6 +97,10 @@ public class AddEditController {
         }
     }
 
+    /**
+     * Reads media data from given media object into fx components
+     * @param media The media to be read from
+     */
     private void loadMediaData(Media media){
         titleField.setText(media.getTitle());
         categoryCombo.setValue(media.getCategory());
@@ -90,6 +109,9 @@ public class AddEditController {
         descriptionArea.setText(media.getDescription());
     }
 
+    /**
+     * Writes changes to media or new media into databank
+     */
     private void saveMedia(){
         try{
             String title = titleField.getText().trim();
@@ -106,7 +128,7 @@ public class AddEditController {
                 showError("Bitte geben Sie eine Kategorie ein.");
                 return;
             }
-            if (rating == null){
+            if (rating < 1 || rating > 5){
                 showError("Bitte wählen Sie eine Bewertung.");
                 return;
             }
@@ -137,6 +159,7 @@ public class AddEditController {
         }
     }
 
+    // Utility Method
     private void showError(String message){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Fehler");
@@ -145,6 +168,7 @@ public class AddEditController {
         alert.showAndWait();
     }
 
+    // Setters for mediaService and editingMedia
     private void setMediaService(MediaService mediaService){
         this.mediaService = mediaService;
     }

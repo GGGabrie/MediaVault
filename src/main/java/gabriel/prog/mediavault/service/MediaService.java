@@ -8,14 +8,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Layer for handling media operations
+ */
 public class MediaService {
     final MediaDao mediaDAO;
 
+    /**
+     * Constructor
+     */
     public MediaService() {
         this.mediaDAO = new MediaDao();
     }
 
 
+    /**
+     * Adds a new media entry
+     * @param title Media title
+     * @param category Media category
+     * @param description Media description
+     * @param rating Media rating
+     * @param status Media status
+     * @return The newly created media object with ID, or null if failed
+     */
     public Media addMedia(String title, String category, String description, int rating, MediaStatus status){
 
         if (title == null || title.trim().isEmpty()){
@@ -38,6 +53,15 @@ public class MediaService {
         return null;
     }
 
+    /**
+     * Updates an existing media entry
+     * @param title Media title
+     * @param category Media category
+     * @param description Media description
+     * @param rating Media rating
+     * @param status Media status
+     * @return true if successful
+     */
     public boolean updateMedia(int id, String title, String category, String description, int rating, MediaStatus status){
         if (title == null || title.trim().isEmpty()){
             throw new IllegalArgumentException("Title cannot be empty");
@@ -51,30 +75,37 @@ public class MediaService {
     }
 
 
+    /**
+     * Deletes media entry based on ID
+     * @param id Media ID
+     * @return true if successful
+     */
     public boolean deleteMedia(int id){
         return mediaDAO.deleteMedia(id);
     }
 
+    /**
+     * Gets a media entry by ID
+     * @param id Media ID
+     * @return Found media, if unsuccessful null
+     */
     public Media getMediaById(int id){
         return mediaDAO.getMediaById(id);
     }
 
+    /**
+     * Gets all media entries
+     * @return A list with all media objects
+     */
     public List<Media> getAllMedia() {
         return mediaDAO.getAllMedia();
     }
 
-    public List<Media> getMediaByCategory(String category){
-        return mediaDAO.getMediaByCategory(category);
-    }
-
-    public List<Media> getMediaByRating(int rating){
-        return mediaDAO.getMediaByRating(rating);
-    }
-
-    public List<Media> getMediaByStatus(MediaStatus status){
-        return mediaDAO.getMediaByStatus(status);
-    }
-
+    /**
+     * Searches media by title. Only has to be a partial match
+     * @param searchTerm The search term
+     * @return List of matching media objects
+     */
     public List<Media> searchMedia(String searchTerm){
         if (searchTerm == null || searchTerm.trim().isEmpty()){
             return getAllMedia();
@@ -82,6 +113,10 @@ public class MediaService {
         return mediaDAO.searchMedia(searchTerm);
     }
 
+    /**
+     * Gets all categories currently present
+     * @return A list of all currently present categories
+     */
     public List<String> getAllCategories(){
         return mediaDAO.getAllMedia().stream()
                 .map(Media::getCategory)
@@ -90,11 +125,11 @@ public class MediaService {
                 .toList();
     }
 
-    public Map<String, Long> getCategoryStatistics() {
-        return mediaDAO.getAllMedia().stream()
-                .collect(Collectors.groupingBy(Media::getCategory, Collectors.counting()));
-    }
-
+    /**
+     * Toggles the status between seen and unseen
+     * @param id The id by which the media is addressed
+     * @return true if successful, false if not
+     */
     public boolean toggleStatus(int id){
         Media media = getMediaById(id);
         if (media == null){

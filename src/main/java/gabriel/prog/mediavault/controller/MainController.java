@@ -1,6 +1,7 @@
 package gabriel.prog.mediavault.controller;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,9 +12,12 @@ import gabriel.prog.mediavault.service.MediaService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Main controller for the MediaVault application
+ */
 public class MainController {
     private final MediaService mediaService;
-    private ObservableList<Media> mediaData;
+    private final ObservableList<Media> mediaData;
 
     @FXML private TableView<Media> mediaTable;
     @FXML private ComboBox<String> categoryFilter;
@@ -22,19 +26,28 @@ public class MainController {
     @FXML private TextField searchField;
     @FXML private Label statusLabel;
 
+    /**
+     * Constructor
+     */
     public MainController(){
         this.mediaService = new MediaService();
         this.mediaData = FXCollections.observableArrayList();
     }
 
+    /**
+     * Initializes FXML data
+     */
+    @FXML
     public void initialize(){
         loadMediaData();
         setupTableColumns();
         setupFilters();
-        refreshMediaList();
         statusLabel.setText("Bereit - " + mediaData.size() + " Medien gefunden");
     }
 
+    /**
+     * Loads the media data from the Databank
+     */
     private void loadMediaData(){
         try {
             List<Media> allMedia = mediaService.getAllMedia();
@@ -46,6 +59,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Sets up the table columns with property bindings
+     */
     private void setupTableColumns(){
         TableColumn<Media, String> titleCol = (TableColumn<Media, String>) mediaTable.getColumns().get(0);
         TableColumn<Media,String> categoryCol = (TableColumn<Media, String>) mediaTable.getColumns().get(1);
@@ -54,19 +70,22 @@ public class MainController {
         TableColumn<Media,String> descCol = (TableColumn<Media, String>) mediaTable.getColumns().get(4);
 
         titleCol.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTitle()));
+                new SimpleStringProperty(cellData.getValue().getTitle()));
         categoryCol.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCategory()));
+                new SimpleStringProperty(cellData.getValue().getCategory()));
         ratingCol.setCellValueFactory(cellData ->
                 new SimpleIntegerProperty(cellData.getValue().getRating()).asObject().asString());
         statusCol.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus().getDisplayName()));
+                new SimpleStringProperty(cellData.getValue().getStatus().getDisplayName()));
         descCol.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescription()));
+                new SimpleStringProperty(cellData.getValue().getDescription()));
 
         mediaTable.setItems(mediaData);
     }
 
+    /**
+     * Sets up filter dropdowns with available options
+     */
     private void setupFilters(){
         categoryFilter.getItems().add("Alle");
         refreshCategories();
@@ -79,6 +98,9 @@ public class MainController {
         statusFilter.setValue("Alle");
     }
 
+    /**
+     * Refreshes the category dropdown
+     */
     private void refreshCategories(){
         List<String> categories = mediaService.getAllCategories();
         categoryFilter.getItems().clear();
@@ -89,6 +111,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Refreshes the media list based on current filters
+     */
     private void refreshMediaList(){
         String category = categoryFilter.getValue();
         String ratingStr = ratingFilter.getValue();
@@ -127,6 +152,11 @@ public class MainController {
         mediaData.setAll(filteredList);
         statusLabel.setText(String.format("%d Medien gefunden", mediaData.size()));
     }
+
+
+
+    // EVENT HANDLERS
+
 
     @FXML
     private void handleRefresh(){
@@ -215,6 +245,7 @@ public class MainController {
     }
 
 
+    // Utility Method
     private void showAlert(String title, String message){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);

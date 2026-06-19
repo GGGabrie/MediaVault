@@ -4,13 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Singleton class for managing database connection
+ */
 public class DataBaseConnection {
     static DataBaseConnection instance;
     private Connection connection;
 
+
     private static final String URL = "jdbc:postgresql://localhost:5432/mediavault";
     private static final String USER = "postgres";
     private static final String PASSWORD = "Tigerpython(?)1";
+
 
     private DataBaseConnection(){
         try{
@@ -21,6 +26,10 @@ public class DataBaseConnection {
         }
     }
 
+    /**
+     * Limits the number of instances of the Class to 1
+     * @return The only database connection
+     */
     public static DataBaseConnection getInstance(){
         if (instance == null) {
             instance = new DataBaseConnection();
@@ -28,6 +37,10 @@ public class DataBaseConnection {
         return instance;
     }
 
+    /**
+     * Getter for the connection
+     * @return The current connection
+     */
     public Connection getConnection(){
         try{
             if (connection == null || connection.isClosed()){
@@ -39,6 +52,9 @@ public class DataBaseConnection {
         return connection;
     }
 
+    /**
+     * Closes the connection
+     */
     public void closeConnection() {
         try{
             if (connection != null && !connection.isClosed()){

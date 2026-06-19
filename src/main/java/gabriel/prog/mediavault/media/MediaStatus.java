@@ -1,5 +1,9 @@
 package gabriel.prog.mediavault.media;
 
+
+/**
+ * Status indicating whether a media item has been seen
+ */
 public enum MediaStatus {
     SEEN("Gesehen"),
     UNSEEN("Nicht gesehen");

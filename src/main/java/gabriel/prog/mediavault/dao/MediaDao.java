@@ -6,9 +6,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for managing the specific SQL DML
+ */
 public class MediaDao {
 
 
+    /**
+     *
+     * @param media The media object to add
+     * @return The ID of the added Media or -1 if adding was unsuccessful
+     */
     public int addMedia(Media media){
         String sql = "INSERT INTO media (title, category, description, rating, status) VALUES (?, ?, ?, ?, ?)";
 
@@ -34,6 +42,11 @@ public class MediaDao {
         return -1;
     }
 
+    /**
+     * Updates an existing media entry
+     * @param media The updated media object
+     * @return true if update was successful
+     */
     public boolean updateMedia(Media media){
         String sql = "UPDATE media SET title = ?, category = ?, description = ?, rating = ?, status = ? WHERE id = ?";
 
@@ -56,6 +69,11 @@ public class MediaDao {
     }
 
 
+    /**
+     * Deletes a media entry by ID
+     * @param id The ID of the media to delete
+     * @return true if deletion was successful
+     */
     public boolean deleteMedia(int id){
         String sql = "DELETE FROM media WHERE id = ?";
 
@@ -72,6 +90,11 @@ public class MediaDao {
     }
 
 
+    /**
+     * Retrieves a media entry by ID
+     * @param id The ID to search for
+     * @return The found media object or null if not found
+     */
     public Media getMediaById(int id){
         String sql = "SELECT * FROM media WHERE id = ?";
 
@@ -90,6 +113,10 @@ public class MediaDao {
         return null;
     }
 
+    /**
+     * Retrieves all media entries
+     * @return A list of all media objects
+     */
     public List<Media> getAllMedia(){
         List<Media> mediaList = new ArrayList<>();
         String sql = "SELECT * FROM media ORDER BY title";
@@ -108,63 +135,11 @@ public class MediaDao {
         return mediaList;
     }
 
-    public List<Media> getMediaByCategory(String category){
-        List<Media> mediaList = new ArrayList<>();
-        String sql = "SELECT * FROM media WHERE LOWER(category) = LOWER(?) ORDER BY title";
-
-        try(Connection connection = DataBaseConnection.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
-
-            statement.setString(1,category);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()){
-                mediaList.add(mapResultSetToMedia(resultSet));
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return mediaList;
-    }
-
-    public List<Media> getMediaByRating(int rating){
-        List<Media> mediaList = new ArrayList<>();
-        String sql = "SELECT * FROM media WHERE rating >= ? ORDER BY rating DESC";
-
-        try (Connection connection = DataBaseConnection.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)){
-
-            statement.setInt(1,rating);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()){
-                mediaList.add(mapResultSetToMedia(resultSet));
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return mediaList;
-    }
-
-    public List<Media> getMediaByStatus(MediaStatus status){
-        List<Media> mediaList = new ArrayList<>();
-        String sql = "SELECT * FROM media WHERE status = ? ORDER BY title";
-
-        try(Connection connection = DataBaseConnection.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
-
-            statement.setString(1, status.name());
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()){
-                mediaList.add(mapResultSetToMedia(resultSet));
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return mediaList;
-    }
-
+    /**
+     * Searches media by title. Only has to be a partial match
+     * @param searchTerm The search term
+     * @return List of matching media objects
+     */
     public List<Media> searchMedia(String searchTerm){
         List<Media> mediaList = new ArrayList<>();
         String sql = "SELECT * FROM media WHERE LOWER(title) LIKE LOWER(?) ORDER BY title";
@@ -185,7 +160,9 @@ public class MediaDao {
         return mediaList;
     }
 
-
+    /**
+     * Maps a ResultSet row to a media object
+     */
     private Media mapResultSetToMedia (ResultSet resultSet) throws SQLException{
         int id = resultSet.getInt("id");
         String title = resultSet.getString("title");
