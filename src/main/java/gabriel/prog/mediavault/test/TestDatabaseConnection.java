@@ -13,23 +13,23 @@ public class TestDatabaseConnection {
 
             // Try to get connection
             Connection conn = DataBaseConnection.getInstance().getConnection();
-            System.out.println("✅ Connection established successfully!");
+            System.out.println("Connection established successfully!");
 
             // Test query
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT 1 as test");
             if (rs.next()) {
-                System.out.println("✅ Query executed successfully! Result: " + rs.getInt("test"));
+                System.out.println("Query executed successfully! Result: " + rs.getInt("test"));
             }
 
             // Check if media table exists
             rs = stmt.executeQuery("SELECT COUNT(*) as count FROM media");
             if (rs.next()) {
-                System.out.println("✅ Media table exists! Row count: " + rs.getInt("count"));
+                System.out.println("Media table exists! Row count: " + rs.getInt("count"));
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Database connection failed!");
+            System.err.println("Database connection failed!");
             e.printStackTrace();
         }
     }

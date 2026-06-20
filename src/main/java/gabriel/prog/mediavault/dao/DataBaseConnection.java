@@ -3,6 +3,7 @@ package gabriel.prog.mediavault.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Singleton class for managing database connection
@@ -11,20 +12,20 @@ public class DataBaseConnection {
     static DataBaseConnection instance;
     private Connection connection;
 
-
-    private static final String URL = "jdbc:postgresql://localhost:5432/mediavault";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "Tigerpython(?)1";
+    private static final String URL = "jdbc:h2:./mediavault_db;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE";
+    private static final String USER = "mv";
+    private static final String PASSWORD = "";
 
 
     private DataBaseConnection(){
         try{
-            Class.forName("org.postgresql.Driver");
+            Class.forName("org.h2.Driver");
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException("Failed to connect to database", e);
         }
     }
+
 
     /**
      * Limits the number of instances of the Class to 1
@@ -50,18 +51,5 @@ public class DataBaseConnection {
             e.printStackTrace();
         }
         return connection;
-    }
-
-    /**
-     * Closes the connection
-     */
-    public void closeConnection() {
-        try{
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

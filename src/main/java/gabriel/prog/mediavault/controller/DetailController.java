@@ -25,6 +25,7 @@ public class DetailController {
      * @param media The media object to be viewed in detail
      */
     public static void showDialog(Media media){
+        // Loads new scene with view
         try{
             FXMLLoader loader = new FXMLLoader(
                     DetailController.class.getResource("Detail-view.fxml"));
@@ -33,6 +34,7 @@ public class DetailController {
             DetailController controller = loader.getController();
             controller.setMediaData(media);
 
+            // Creates new Stage on which to display the scene
             Stage stage = new Stage();
             stage.setTitle("Details: " + media.getTitle());
             stage.setScene(scene);

@@ -1,6 +1,5 @@
 package gabriel.prog.mediavault.controller;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,18 +62,20 @@ public class MainController {
      * Sets up the table columns with property bindings
      */
     private void setupTableColumns(){
+        // Getting Columns from mediaTable
         TableColumn<Media, String> titleCol = (TableColumn<Media, String>) mediaTable.getColumns().get(0);
         TableColumn<Media,String> categoryCol = (TableColumn<Media, String>) mediaTable.getColumns().get(1);
         TableColumn<Media,String> ratingCol = (TableColumn<Media, String>) mediaTable.getColumns().get(2);
         TableColumn<Media,String> statusCol = (TableColumn<Media, String>) mediaTable.getColumns().get(3);
         TableColumn<Media,String> descCol = (TableColumn<Media, String>) mediaTable.getColumns().get(4);
 
+        // Populating said Columns with the specific data
         titleCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getTitle()));
         categoryCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getCategory()));
         ratingCol.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(cellData.getValue().getRating()).asObject().asString());
+                new SimpleStringProperty(cellData.getValue().getRating() + "★"));
         statusCol.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getStatus().getDisplayName()));
         descCol.setCellValueFactory(cellData ->
@@ -115,6 +116,7 @@ public class MainController {
      * Refreshes the media list based on current filters
      */
     private void refreshMediaList(){
+        //Get filters
         String category = categoryFilter.getValue();
         String ratingStr = ratingFilter.getValue();
         String statusStr = statusFilter.getValue();
@@ -122,6 +124,7 @@ public class MainController {
 
         List<Media> filteredList;
 
+        // Apply filters
         if (search != null && !search.trim().isEmpty()){
             filteredList = mediaService.searchMedia(search);
         } else {
@@ -200,17 +203,20 @@ public class MainController {
 
     @FXML
     private void handleDeleteMedia(){
+        // Check if selected
         Media selected = mediaTable.getSelectionModel().getSelectedItem();
         if (selected == null){
             showAlert("Keine Auswahl", "Bitte wählen Sie ein Medium zum Löschen aus.");
             return;
         }
 
+        // Asserting this is intended User action
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Löschen bestätigen");
         alert.setHeaderText("Möchten Sie dieses Medium wirklich löschen?");
         alert.setContentText(selected.getTitle() + " (" + selected.getCategory() + ")");
 
+        // Deleting Media
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK){
             boolean deleted = mediaService.deleteMedia(selected.getId());

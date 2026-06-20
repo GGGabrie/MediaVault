@@ -39,6 +39,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation("org.postgresql:postgresql:42.7.3")
+    implementation("com.h2database:h2:2.2.224")
 }
 
 tasks.withType<Test> {

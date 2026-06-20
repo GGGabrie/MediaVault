@@ -18,6 +18,7 @@ public enum MediaStatus {
         return displayName;
     }
 
+    // Creates a MediaStatus from a String
     public static MediaStatus fromDisplayName(String displayName) {
         for (MediaStatus status: values()) {
             if (status.displayName.equals(displayName)){

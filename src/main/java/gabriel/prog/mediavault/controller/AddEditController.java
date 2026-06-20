@@ -31,7 +31,9 @@ public class AddEditController {
      * @param mediaService The service to use
      */
     public static void showDialog(Media media, MediaService mediaService){
+
         try{
+            // Loads new Pane + View
             FXMLLoader loader = new FXMLLoader(
                     AddEditController.class.getResource("AddEdit-view.fxml")
             );
@@ -42,6 +44,7 @@ public class AddEditController {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setDialogPane(dialogPane);
 
+            // Depending on if editing or not give different title
             if (media == null) {
                 dialog.setTitle("Neues Medium hinzufügen");
                 controller.setEditingMedia(null);
@@ -53,6 +56,7 @@ public class AddEditController {
 
             controller.loadCategories();
 
+            // Saves changes to media or new media when action is finished
             dialog.showAndWait().ifPresent(result -> {
                 if (result == ButtonType.OK){
                     controller.saveMedia();
@@ -114,9 +118,10 @@ public class AddEditController {
      */
     private void saveMedia(){
         try{
+            // Forces user to put in complete necessary data
             String title = titleField.getText().trim();
             String category = categoryCombo.getValue();
-            Integer rating = Integer.parseInt(ratingCombo.getValue());
+            int rating = Integer.parseInt(ratingCombo.getValue());
             String statusStr = statusCombo.getValue();
             String description = descriptionArea.getText();
 
@@ -137,8 +142,9 @@ public class AddEditController {
                 return;
             }
 
-            MediaStatus status = statusStr.equals("Gesehen") ? MediaStatus.SEEN : MediaStatus.UNSEEN;
+            MediaStatus status = MediaStatus.fromDisplayName(statusStr);
 
+            // Saves changes or adds media to dataset
             boolean success;
             if (editingMedia == null){
                 Media newMedia = mediaService.addMedia(title, category, description, rating, status);

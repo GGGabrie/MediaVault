@@ -28,6 +28,7 @@ public class MediaDao {
             statement.setInt(4, media.getRating());
             statement.setString(5, media.getStatus().name());
 
+            // Executes addition to DB and gets the new ID from the database
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows > 0){
@@ -60,6 +61,7 @@ public class MediaDao {
             statement.setString(5, media.getStatus().name());
             statement.setInt(6, media.getId());
 
+            // Executes update and returns true when successful
             return statement.executeUpdate() > 0;
 
         } catch (SQLException e){

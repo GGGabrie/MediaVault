@@ -22,7 +22,7 @@ public class MediaVaultApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MediaVaultApplication.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
 
         stage.getIcons().add(new Image("gabriel/prog/mediavault/images/vault.png"));

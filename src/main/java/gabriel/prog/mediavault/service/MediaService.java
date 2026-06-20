@@ -5,8 +5,6 @@ import gabriel.prog.mediavault.media.Media;
 import gabriel.prog.mediavault.media.MediaStatus;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Layer for handling media operations
@@ -127,18 +125,18 @@ public class MediaService {
 
     /**
      * Toggles the status between seen and unseen
+     *
      * @param id The id by which the media is addressed
-     * @return true if successful, false if not
      */
-    public boolean toggleStatus(int id){
+    public void toggleStatus(int id){
         Media media = getMediaById(id);
         if (media == null){
-            return false;
+            return;
         }
 
         MediaStatus newStatus = media.getStatus() == MediaStatus.SEEN ? MediaStatus.UNSEEN: MediaStatus.SEEN;
 
         media.setStatus(newStatus);
-        return mediaDAO.updateMedia(media);
+        mediaDAO.updateMedia(media);
     }
 }
