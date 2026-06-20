@@ -3,7 +3,6 @@
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
     <data-source source="LOCAL" name="mediavault_db" uuid="ff1073fa-5aa6-4591-b10b-13e13214bb65">
       <driver-ref>h2.unified</driver-ref>
-      <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:./mediavault_db;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE</jdbc-url>
       <jdbc-additional-properties>

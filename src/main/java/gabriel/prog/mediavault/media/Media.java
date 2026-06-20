@@ -15,11 +15,11 @@ public class Media {
 
     /**
      * Constructor for new Media without ID
-     * @param title
-     * @param category
-     * @param description
-     * @param rating
-     * @param status
+     * @param title Media title
+     * @param category Media category
+     * @param description Media description
+     * @param rating Media rating
+     * @param status Media status
      */
     public Media(String title, String category, String description, int rating, MediaStatus status){
         this.title = title;
@@ -31,12 +31,11 @@ public class Media {
 
     /**
      * Constructor for existing media in database
-     * @param id
-     * @param title
-     * @param category
-     * @param description
-     * @param rating
-     * @param status
+     * @param title Media title
+     * @param category Media category
+     * @param description Media description
+     * @param rating Media rating
+     * @param status Media status
      */
     public Media(int id, String title, String category, String description, int rating, MediaStatus status){
         this.id = id;
