@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import gabriel.prog.mediavault.media.Media;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Controller for showing media details in a separate window
@@ -30,6 +31,7 @@ public class DetailController {
             FXMLLoader loader = new FXMLLoader(
                     DetailController.class.getResource("Detail-view.fxml"));
             Scene scene = new Scene(loader.load(), 500,350);
+            scene.getStylesheets().add(Objects.requireNonNull(DetailController.class.getResource("Detail.css")).toExternalForm());
 
             DetailController controller = loader.getController();
             controller.setMediaData(media);

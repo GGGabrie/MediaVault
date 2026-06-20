@@ -57,6 +57,10 @@
     -fx-font-size: 11px;
 }
 
+.status-bar .button {
+    -fx-background-color: #ffffff;
+}
+
 .text-field {
     -fx-background-radius: 15px;
     -fx-padding: 4px 12px;
@@ -66,4 +70,8 @@
 
 .text-field:focused {
     -fx-border-color: #4a90d9;
+}
+
+.combo-box {
+    -fx-background-color: #ffffff;
 }

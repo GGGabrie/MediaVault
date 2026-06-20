@@ -1,0 +1,13 @@
+.text-area {
+    -fx-border-color: #ffffff;
+    -fx-background-color: #ffffff;
+}
+
+.text-area:focused{
+    -fx-border-color: #ffffff;
+    -fx-background-color: #ffffff;
+}
+
+.button {
+    -fx-background-color: #ffffff;
+}

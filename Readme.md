@@ -22,3 +22,5 @@ Eine Desktop-Anwendung zur Verwaltung von Media mit Java und JavaFX
 - KI wurde zum Erstellen von Medien Daten in der Datenbank verwendet:
   - "Give me some sample data for the databank. Here is the structure: [Kopie von Setup der Tabelle in der Datenbank]"
 - KI wurde zudem zur Erklärung von bestimmten Elementen von FXML, JavaFX und CSS verwendet. Implementiert wurde jedoch eigenständig.
+
+###### Wird als Zip abgegeben, weil git die H2 DB nicht akzeptiert
